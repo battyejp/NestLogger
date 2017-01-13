@@ -22,7 +22,7 @@ namespace NestLogger.Controllers
             return db.ThermostateReadings;
         }
 
-        // GET: api/ThermostateReadingsService/5
+        /*// GET: api/ThermostateReadingsService/5
         [ResponseType(typeof(ThermostateReading))]
         public IHttpActionResult GetThermostateReading(int id)
         {
@@ -68,7 +68,7 @@ namespace NestLogger.Controllers
             }
 
             return StatusCode(HttpStatusCode.NoContent);
-        }
+        }*/
 
         // POST: api/ThermostateReadingsService
         [ResponseType(typeof(ThermostateReading))]
@@ -86,7 +86,7 @@ namespace NestLogger.Controllers
         }
 
         // DELETE: api/ThermostateReadingsService/5
-        [ResponseType(typeof(ThermostateReading))]
+        /*[ResponseType(typeof(ThermostateReading))]
         public IHttpActionResult DeleteThermostateReading(int id)
         {
             ThermostateReading thermostateReading = db.ThermostateReadings.Find(id);
@@ -113,6 +113,6 @@ namespace NestLogger.Controllers
         private bool ThermostateReadingExists(int id)
         {
             return db.ThermostateReadings.Count(e => e.Id == id) > 0;
-        }
+        }*/
     }
 }
