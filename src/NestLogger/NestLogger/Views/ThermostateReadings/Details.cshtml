@@ -1,0 +1,42 @@
+﻿@model NestLogger.Models.ThermostateReading
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ThermostateReading</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DateTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RoomTemperature)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RoomTemperature)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TargetTemperature)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TargetTemperature)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
