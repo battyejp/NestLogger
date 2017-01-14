@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using NestLogger.Dtos;
 
 namespace NestLogger.Models
 {
@@ -19,6 +20,6 @@ namespace NestLogger.Models
         {
         }
 
-        public System.Data.Entity.DbSet<NestLogger.Models.ThermostateReading> ThermostateReadings { get; set; }
+        public System.Data.Entity.DbSet<ThermostateReading> ThermostateReadings { get; set; }
     }
 }

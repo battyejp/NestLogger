@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NestLogger", "NestLogger\Ne
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NestLoggerJob", "NestLoggerJob\NestLoggerJob.csproj", "{CDC06F9A-3E84-4AC3-935E-C6758AB36E4D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NestLogger.Dtos", "NestLogger.Dtos\NestLogger.Dtos.csproj", "{6AB76C9D-2470-4240-BD9B-20C606F870FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{CDC06F9A-3E84-4AC3-935E-C6758AB36E4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDC06F9A-3E84-4AC3-935E-C6758AB36E4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CDC06F9A-3E84-4AC3-935E-C6758AB36E4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AB76C9D-2470-4240-BD9B-20C606F870FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AB76C9D-2470-4240-BD9B-20C606F870FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AB76C9D-2470-4240-BD9B-20C606F870FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AB76C9D-2470-4240-BD9B-20C606F870FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
