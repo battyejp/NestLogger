@@ -146,6 +146,10 @@
     <Compile Include="Migrations\201701130841251_Initial.Designer.cs">
       <DependentUpon>201701130841251_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701152128305_Add-JsonReadingColumn.cs" />
+    <Compile Include="Migrations\201701152128305_Add-JsonReadingColumn.Designer.cs">
+      <DependentUpon>201701152128305_Add-JsonReadingColumn.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\NestLoggerContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -188,6 +192,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201701130841251_Initial.resx">
       <DependentUpon>201701130841251_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701152128305_Add-JsonReadingColumn.resx">
+      <DependentUpon>201701152128305_Add-JsonReadingColumn.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

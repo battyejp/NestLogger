@@ -11,5 +11,7 @@ namespace NestLogger.Dtos
         public string RoomTemperature { get; set; }
 
         public string TargetTemperature { get; set; }
+
+        public string JsonReading { get; set; }
     }
 }

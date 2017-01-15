@@ -63,7 +63,8 @@ namespace NestLoggerJob
             {
                 DateTime = DateTime.Now,
                 RoomTemperature = jobj["ambient_temperature_c"].ToString(),
-                TargetTemperature = jobj["target_temperature_c"].ToString()
+                TargetTemperature = jobj["target_temperature_c"].ToString(),
+                JsonReading = readingStr
             };
 
             var json = JsonConvert.SerializeObject(reading);
@@ -82,7 +83,7 @@ namespace NestLoggerJob
             request.AddParameter("application/json", json, ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
 
-            if (response.StatusCode != HttpStatusCode.OK)
+            if (response.StatusCode != HttpStatusCode.Created)
             {
                 log.WriteLine($"Error posting reading at {reading.DateTime.ToShortDateString()}");
             }

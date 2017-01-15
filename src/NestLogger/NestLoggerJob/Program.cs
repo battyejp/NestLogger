@@ -25,7 +25,6 @@ namespace NestLoggerJob
             // The following code will invoke a function called ManualTrigger and 
             // pass in data (value in this case) to the function
             host.Call(typeof(Functions).GetMethod("ManualTrigger"), new { value = 20 });
-            Console.ReadLine();
         }
     }
 }
