@@ -12,6 +12,10 @@ namespace NestLogger.Dtos
 
         public string TargetTemperature { get; set; }
 
+        public string OutsideTemperature { get; set; }
+
         public string JsonReading { get; set; }
+
+        public string WeatherJsonReading { get; set; }
     }
 }

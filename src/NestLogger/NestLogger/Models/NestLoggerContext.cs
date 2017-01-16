@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Web;
+﻿using System.Data.Entity;
 using NestLogger.Dtos;
 
 namespace NestLogger.Models
@@ -20,6 +16,6 @@ namespace NestLogger.Models
         {
         }
 
-        public System.Data.Entity.DbSet<ThermostateReading> ThermostateReadings { get; set; }
+        public DbSet<ThermostateReading> ThermostateReadings { get; set; }
     }
 }

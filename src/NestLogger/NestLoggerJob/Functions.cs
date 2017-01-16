@@ -29,54 +29,42 @@ namespace NestLoggerJob
             message = value.ToString();
             log.WriteLine("Following message will be written on the Queue={0}", message);
 
-            /*var test = "https://api.home.nest.com/oauth2/access_token"
-                .PostUrlEncodedAsync(new {code = "UU93AG2F", client_id = "39058eea-077e-4c1d-b8a3-87a65dfd474b", client_secret = "oeOXdMsv2dT5zNuAeYThIEOQM", grant_type = "authorization_code" })
-                .Result.Content.ReadAsStringAsync().Result;
 
-            var json = JObject.Parse(test);
-            var accessToken = json["access_token"];*/
+            var reading = GetThermostateReading();
+            var weatherReadingJson = GetJsonWeatherReading(log);
+            reading.WeatherJsonReading = weatherReadingJson;
 
-            /*var test =
-                "https://firebase-apiserver08-tah01-iad01.dapi.production.nest.com:9553/devices/thermostats/xojpoFNq0Mbg6KtnlM_po-9fq8FsJ0ZS"
-                .WithOAuthBearerToken("c.qltDMn1Wzs07mKQOYDMJwWzCmcPemYtpLUzvwT0Cg67LCggWjhRXZb1HJkfW3474deoZk0u58kciM2NuqAX6LrXyu0vc6QU2Hia6On5xYdJm1CkXfGo7zQXBwcCIHjv5n9UzJvLOyNnwmA1Y")
-                .GetStringAsync().Result;*/
+            if (!string.IsNullOrWhiteSpace(weatherReadingJson))
+            {
+                var jobj = JObject.Parse(weatherReadingJson);
+                var temp = jobj["main"]["temp"].ToString();
+                var tempVal = double.Parse(temp);
+                var tempInC = tempVal - 273.15;
+                reading.OutsideTemperature = tempInC.ToString("0.#");
+            }
 
-            string readingStr = null;
+            UploadReading(reading, log);
+        }
+
+        private static string GetJsonWeatherReading(TextWriter log)
+        {
+            string jsonStr = string.Empty;
 
             try
             {
-                readingStr = GetThermostateReading("https://developer-api.nest.com/devices/thermostats/xojpoFNq0Mbg6KtnlM_po-9fq8FsJ0ZS");
+                jsonStr = "http://api.openweathermap.org/data/2.5/weather?q=ls297sy,uk&appid=6b3fbed55067d35f5c7c29f95192bfaf".GetStringAsync().Result;
             }
             catch (Exception ex)
             {
-                string msg = ex.InnerException.Message;
-                var linkParser = new Regex(@"\b(?:https?://|www\.)\S+\b", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-                var matches = linkParser.Matches(msg);
-                var url = matches[0].ToString();
-
-                readingStr = GetThermostateReading(url);
+                log.WriteLine($"Error getting weather reading");
             }
 
-            var jobj = JObject.Parse(readingStr);
+            return jsonStr;
+        }
 
-            var reading = new ThermostateReading
-            {
-                DateTime = DateTime.Now,
-                RoomTemperature = jobj["ambient_temperature_c"].ToString(),
-                TargetTemperature = jobj["target_temperature_c"].ToString(),
-                JsonReading = readingStr
-            };
-
+        private static void UploadReading(ThermostateReading reading, TextWriter log)
+        {
             var json = JsonConvert.SerializeObject(reading);
-            /*var reponse = "http://nestlogger.azurewebsites.net/api/ThermostateReadingsservice"
-                .PostJsonAsync(json).Result;
-
-            if (!reponse.IsSuccessStatusCode)
-            {
-                log.WriteLine($"Error posting reading at {reading.DateTime.ToShortDateString()}");
-            }
-
-            log.WriteLine($"Success posting reading at {reading.DateTime.ToShortDateString()}");*/
 
             var client = new RestClient("http://nestlogger.azurewebsites.net/api/ThermostateReadingsservice");
             var request = new RestRequest(Method.POST);
@@ -91,7 +79,53 @@ namespace NestLoggerJob
             log.WriteLine($"Success posting reading at {reading.DateTime.ToShortDateString()}");
         }
 
-        private static string GetThermostateReading(string url)
+        private static ThermostateReading GetThermostateReading()
+        {
+            string readingStr = null;
+
+            try
+            {
+                readingStr = GetJsonThermostateReading("https://developer-api.nest.com/devices/thermostats/xojpoFNq0Mbg6KtnlM_po-9fq8FsJ0ZS");
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.InnerException.Message;
+                var linkParser = new Regex(@"\b(?:https?://|www\.)\S+\b", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                var matches = linkParser.Matches(msg);
+                var url = matches[0].ToString();
+
+                readingStr = GetJsonThermostateReading(url);
+            }
+
+            var jobj = JObject.Parse(readingStr);
+
+            return new ThermostateReading
+            {
+                DateTime = DateTime.Now,
+                RoomTemperature = jobj["ambient_temperature_c"].ToString(),
+                TargetTemperature = jobj["target_temperature_c"].ToString(),
+                JsonReading = readingStr
+            };
+        }
+
+        private static string GetAccessToken()
+        {
+            var test = "https://api.home.nest.com/oauth2/access_token"
+                .PostUrlEncodedAsync(
+                    new
+                    {
+                        code = "UU93AG2F",
+                        client_id = "39058eea-077e-4c1d-b8a3-87a65dfd474b",
+                        client_secret = "oeOXdMsv2dT5zNuAeYThIEOQM",
+                        grant_type = "authorization_code"
+                    })
+                .Result.Content.ReadAsStringAsync().Result;
+
+            var json = JObject.Parse(test);
+           return json["access_token"].ToString();
+        }
+
+        private static string GetJsonThermostateReading(string url)
         {
             return url
                 .WithOAuthBearerToken("c.qltDMn1Wzs07mKQOYDMJwWzCmcPemYtpLUzvwT0Cg67LCggWjhRXZb1HJkfW3474deoZk0u58kciM2NuqAX6LrXyu0vc6QU2Hia6On5xYdJm1CkXfGo7zQXBwcCIHjv5n9UzJvLOyNnwmA1Y")

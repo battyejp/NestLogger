@@ -47,7 +47,7 @@ namespace NestLogger.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,DateTime,RoomTemperature,TargetTemperature,JsonReading")] ThermostateReading thermostateReading)
+        public ActionResult Create([Bind(Include = "Id,DateTime,RoomTemperature,TargetTemperature,OutsideTemperature,JsonReading,WeatherJsonReading")] ThermostateReading thermostateReading)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +79,7 @@ namespace NestLogger.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,DateTime,RoomTemperature,TargetTemperature,JsonReading")] ThermostateReading thermostateReading)
+        public ActionResult Edit([Bind(Include = "Id,DateTime,RoomTemperature,TargetTemperature,OutsideTemperature,JsonReading,WeatherJsonReading")] ThermostateReading thermostateReading)
         {
             if (ModelState.IsValid)
             {
