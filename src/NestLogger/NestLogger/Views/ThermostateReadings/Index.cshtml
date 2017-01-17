@@ -1,4 +1,5 @@
-﻿@model IEnumerable<NestLogger.Dtos.ThermostateReading>
+﻿@using Newtonsoft.Json
+@model IEnumerable<NestLogger.Dtos.ThermostateReading>
 
 @{
     ViewBag.Title = "Index";
@@ -20,6 +21,14 @@
                     </span>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class='col-xs-12'>
+            <div id="curve_chart" style="width: 900px; height: 500px"></div>
         </div>
     </div>
 </div>
@@ -66,6 +75,7 @@
 </table>
 
 @section Scripts{
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
         $(function() {
             $('#datetimepicker1').datetimepicker({
@@ -89,6 +99,41 @@
                 if (!results[2]) return '';
                 return decodeURIComponent(results[2].replace(/\+/g, " "));
             }
+
+            google.charts.load('current', { 'packages': ['corechart'] });
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+
+                var modelData = @Html.Raw(JsonConvert.SerializeObject(this.Model));
+
+                var arrayLength = modelData.length;
+                var data = new google.visualization.DataTable();
+                data.addColumn('string','Time');
+                data.addColumn('number', 'Outside');
+                data.addColumn('number', 'Room');
+                data.addColumn('number', 'Thermostat');
+                data.addRows(arrayLength);
+
+                for (var i = 0; i < arrayLength; i++) {
+                    var reading = modelData[i];
+                    data.setValue(i, 0, reading.DateTime.split('T')[1]);
+                    data.setValue(i, 1, reading.OutsideTemperature);
+                    data.setValue(i, 2, reading.RoomTemperature);
+                    data.setValue(i, 3, reading.TargetTemperature);
+                }
+
+                var options = {
+                    title: 'Temperatures',
+                    curveType: 'function',
+                    legend: { position: 'bottom' }
+                };
+
+                var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+                chart.draw(data, options);
+            }
+
         });
     </script>
 }
