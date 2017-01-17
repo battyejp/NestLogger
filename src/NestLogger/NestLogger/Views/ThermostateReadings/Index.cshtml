@@ -9,6 +9,21 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+<div class="container">
+    <div class="row">
+        <div class='col-sm-6'>
+            <div class="form-group">
+                <div class='input-group date' id='datetimepicker1'>
+                    <input type='text' class="form-control"/>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <table class="table">
     <tr>
         <th>
@@ -26,26 +41,54 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateTime)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RoomTemperature)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.TargetTemperature)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.OutsideTemperature)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
-
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoomTemperature)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TargetTemperature)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OutsideTemperature)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {id = item.Id}) |
+                @Html.ActionLink("Details", "Details", new {id = item.Id}) |
+                @Html.ActionLink("Delete", "Delete", new {id = item.Id})
+            </td>
+        </tr>
+    }
 </table>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(function() {
+            $('#datetimepicker1').datetimepicker({
+                format: 'DD/MM/YYYY',
+                defaultDate: new Date(getParameterByName("date"))
+            }).on('dp.change', function (e) {
+                var url = '@Url.Action("Index", "ThermostateReadings")';
+                var parts = e.date._i.split("/");
+                url += '?date=' + (e.date._d.getMonth() + 1) + '%2F' + e.date._d.getDate() + '%2F' + e.date._d.getFullYear();
+                window.location.href = url;
+            });
+
+            function getParameterByName(name, url) {
+                if (!url) {
+                    url = window.location.href;
+                }
+                name = name.replace(/[\[\]]/g, "\\$&");
+                var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                    results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return '';
+                return decodeURIComponent(results[2].replace(/\+/g, " "));
+            }
+        });
+    </script>
+}

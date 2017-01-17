@@ -16,9 +16,12 @@ namespace NestLogger.Controllers
         private NestLoggerContext db = new NestLoggerContext();
 
         // GET: ThermostateReadings
-        public ActionResult Index()
+        public ActionResult Index(DateTime? date)
         {
-            return View(db.ThermostateReadings.ToList());
+            var readings = db.ThermostateReadings.ToList()
+                .Where(x => !date.HasValue|| x.DateTime.Date == date.Value);
+
+            return View(readings);
         }
 
         // GET: ThermostateReadings/Details/5
