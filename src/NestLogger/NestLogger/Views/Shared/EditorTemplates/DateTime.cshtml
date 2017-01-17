@@ -1,0 +1,30 @@
+﻿@using NestLogger.Common
+
+@model Nullable<System.DateTime>
+
+<div class='input-group date'>
+    @Html.TextBoxFor(model => model, "", new { @class = "form-control" })
+    <span class="input-group-addon">
+        <span class="glyphicon glyphicon-calendar"></span>
+    </span>
+</div>
+
+@Html.Section(
+    @<script type="text/javascript">
+        $(function() {
+            var showTime = '@ViewData["ShowTime"]' === 'True';
+            var format = showTime ? 'DD/MM/YYYY HH:mm' : 'DD/MM/YYYY';
+
+            $('.date').datetimepicker({
+                format: format
+            });
+        });
+
+        function GetDate(dateStr) {
+            var reggie = /(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2})/;
+            var dateArray = reggie.exec(dateStr);
+            return new Date(dateArray[3], dateArray[2] - 1, dateArray[1], dateArray[4], dateArray[5]);
+        }
+
+    </script>, "Scripts"
+)

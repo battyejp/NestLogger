@@ -131,14 +131,15 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\" />
-    <Folder Include="Views\Home\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Common\HtmlExtensions.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MeterReadingsController.cs" />
     <Compile Include="Controllers\ThermostateReadingsController.cs" />
     <Compile Include="Controllers\ThermostateReadingsServiceController.cs" />
     <Compile Include="Global.asax.cs">
@@ -156,8 +157,13 @@
     <Compile Include="Migrations\201701161032527_Add-WeatherColumns.Designer.cs">
       <DependentUpon>201701161032527_Add-WeatherColumns.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701171531325_AddTable-MeterReadings.cs" />
+    <Compile Include="Migrations\201701171531325_AddTable-MeterReadings.Designer.cs">
+      <DependentUpon>201701171531325_AddTable-MeterReadings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\NestLoggerContext.cs" />
+    <Compile Include="Models\ViewModels\DaySummary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -190,6 +196,7 @@
     <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -208,6 +215,12 @@
     <Content Include="Views\ThermostateReadings\Details.cshtml" />
     <Content Include="Views\ThermostateReadings\Edit.cshtml" />
     <Content Include="Views\ThermostateReadings\Index.cshtml" />
+    <Content Include="Views\MeterReadings\Create.cshtml" />
+    <Content Include="Views\MeterReadings\Delete.cshtml" />
+    <Content Include="Views\MeterReadings\Details.cshtml" />
+    <Content Include="Views\MeterReadings\Edit.cshtml" />
+    <Content Include="Views\MeterReadings\Index.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201701130841251_Initial.resx">
@@ -218,6 +231,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701161032527_Add-WeatherColumns.resx">
       <DependentUpon>201701161032527_Add-WeatherColumns.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701171531325_AddTable-MeterReadings.resx">
+      <DependentUpon>201701171531325_AddTable-MeterReadings.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

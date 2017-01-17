@@ -1,0 +1,93 @@
+﻿@using Newtonsoft.Json
+@model NestLogger.Models.ViewModels.DaySummary
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Summary</h2>
+
+<div class="container" style="margin-top: 30px;">
+    <div class="row">
+        <div class='col-xs-4'>
+            <div class="form-group">
+                <div class='input-group date' id='datetimepicker1' style="max-width: 200px;">
+                    <input type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class='col-xs-4'>
+            <p>Meter Reading: @Model.MeterReading</p>
+            <p>Units: @Model.UnitsUsed</p>
+            <p>Energy Usage: @Model.EnergyUsed kWh</p>
+        </div>
+        <div class='col-xs-4'>
+            @if (@Model.UnitsUsed != 0)
+            {
+                <p>Energy Cost: £@Model.EnergyCost</p>
+                <p>Day Charge: @(Model.DayCharge*100)p</p>
+                <p>Total Cost: £@Model.TotalChargeNoVAT.ToString("0.00#")</p>
+                <p>Total Cost (VAT): £@Model.TotalCharge.ToString("0.00#")</p>
+            }
+        </div>
+    </div>
+    <div class="row">
+        <div class='col-xs-12'>
+            <div id="curve_chart" style="width: 900px; height: 500px"></div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#datetimepicker1').datetimepicker({
+                format: 'DD/MM/YYYY',
+                defaultDate: new Date(getParameterByName("date"))
+            }).on('dp.change', function (e) {
+                var url = '@Url.Action("Index", "Home")';
+                url += '?date=' + (e.date._d.getMonth() + 1) + '%2F' + e.date._d.getDate() + '%2F' + e.date._d.getFullYear();
+                window.location.href = url;
+            });
+
+            google.charts.load('current', { 'packages': ['corechart'] });
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+
+                var modelData = @Html.Raw(JsonConvert.SerializeObject(this.Model.ThermostateReadings));
+
+                var arrayLength = modelData.length;
+                var data = new google.visualization.DataTable();
+                data.addColumn('string','Time');
+                data.addColumn('number', 'Outside');
+                data.addColumn('number', 'Room');
+                data.addColumn('number', 'Thermostat');
+                data.addRows(arrayLength);
+
+                for (var i = 0; i < arrayLength; i++) {
+                    var reading = modelData[i];
+                    data.setValue(i, 0, reading.DateTime.split('T')[1]);
+                    data.setValue(i, 1, reading.OutsideTemperature);
+                    data.setValue(i, 2, reading.RoomTemperature);
+                    data.setValue(i, 3, reading.TargetTemperature);
+                }
+
+                var options = {
+                    title: 'Temperatures',
+                    curveType: 'function',
+                    legend: { position: 'bottom' }
+                };
+
+                var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+                chart.draw(data, options);
+            }
+
+        });
+    </script>
+}

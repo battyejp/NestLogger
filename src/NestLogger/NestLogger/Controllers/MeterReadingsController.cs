@@ -11,113 +11,107 @@ using NestLogger.Models;
 
 namespace NestLogger.Controllers
 {
-    public class ThermostateReadingsController : Controller
+    public class MeterReadingsController : Controller
     {
         private NestLoggerContext db = new NestLoggerContext();
 
-        // GET: ThermostateReadings
-        public ActionResult Index(DateTime? date)
+        // GET: MeterReadings
+        public ActionResult Index()
         {
-            if (!date.HasValue)
-                return RedirectToAction("Index", new {date = DateTime.Today});
-
-            var readings = db.ThermostateReadings.ToList()
-                .Where(x => x.DateTime.Date == date);
-
-            return View(readings);
+            return View(db.MeterReadings.ToList());
         }
 
-        // GET: ThermostateReadings/Details/5
+        // GET: MeterReadings/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ThermostateReading thermostateReading = db.ThermostateReadings.Find(id);
-            if (thermostateReading == null)
+            MeterReading meterReading = db.MeterReadings.Find(id);
+            if (meterReading == null)
             {
                 return HttpNotFound();
             }
-            return View(thermostateReading);
+            return View(meterReading);
         }
 
-        // GET: ThermostateReadings/Create
+        // GET: MeterReadings/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: ThermostateReadings/Create
+        // POST: MeterReadings/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,DateTime,RoomTemperature,TargetTemperature,OutsideTemperature,JsonReading,WeatherJsonReading")] ThermostateReading thermostateReading)
+        public ActionResult Create([Bind(Include = "Id,DateTime,Value")] MeterReading meterReading)
         {
             if (ModelState.IsValid)
             {
-                db.ThermostateReadings.Add(thermostateReading);
+                db.MeterReadings.Add(meterReading);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(thermostateReading);
+            return View(meterReading);
         }
 
-        // GET: ThermostateReadings/Edit/5
+        // GET: MeterReadings/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ThermostateReading thermostateReading = db.ThermostateReadings.Find(id);
-            if (thermostateReading == null)
+            MeterReading meterReading = db.MeterReadings.Find(id);
+            if (meterReading == null)
             {
                 return HttpNotFound();
             }
-            return View(thermostateReading);
+            return View(meterReading);
         }
 
-        // POST: ThermostateReadings/Edit/5
+        // POST: MeterReadings/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,DateTime,RoomTemperature,TargetTemperature,OutsideTemperature,JsonReading,WeatherJsonReading")] ThermostateReading thermostateReading)
+        public ActionResult Edit([Bind(Include = "Id,DateTime,Value")] MeterReading meterReading)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(thermostateReading).State = EntityState.Modified;
+                db.Entry(meterReading).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(thermostateReading);
+            return View(meterReading);
         }
 
-        // GET: ThermostateReadings/Delete/5
+        // GET: MeterReadings/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ThermostateReading thermostateReading = db.ThermostateReadings.Find(id);
-            if (thermostateReading == null)
+            MeterReading meterReading = db.MeterReadings.Find(id);
+            if (meterReading == null)
             {
                 return HttpNotFound();
             }
-            return View(thermostateReading);
+            return View(meterReading);
         }
 
-        // POST: ThermostateReadings/Delete/5
+        // POST: MeterReadings/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            ThermostateReading thermostateReading = db.ThermostateReadings.Find(id);
-            db.ThermostateReadings.Remove(thermostateReading);
+            MeterReading meterReading = db.MeterReadings.Find(id);
+            db.MeterReadings.Remove(meterReading);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
