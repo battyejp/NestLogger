@@ -18,9 +18,11 @@ namespace NestLogger.Controllers
             if (!date.HasValue)
                 return RedirectToAction("Index", new { date = DateTime.Today });
 
-            var daySummary = new DaySummary();
-            daySummary.ThermostateReadings = db.ThermostateReadings.ToList()
-                .Where(x => x.DateTime.Date == date);
+            var daySummary = new DaySummary
+            {
+                ThermostateReadings = db.ThermostateReadings.ToList()
+                    .Where(x => x.DateTime.Date == date)
+            };
 
             var meterReading = db.MeterReadings.ToList()
                 .SingleOrDefault(x => x.DateTime.Date == date.Value);
@@ -34,7 +36,7 @@ namespace NestLogger.Controllers
 
                 if (previousMeterReading != null)
                 {
-                    daySummary.UnitsUsed = meterReading.Value - previousMeterReading.Value;
+                    daySummary.CostSummary = new CostSummary(meterReading.Value, previousMeterReading.Value, 1);
                 }
             }
 

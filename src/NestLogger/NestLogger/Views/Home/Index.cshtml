@@ -12,25 +12,18 @@
         <div class='col-xs-4'>
             <div class="form-group">
                 <div class='input-group date' id='datetimepicker1' style="max-width: 200px;">
-                    <input type='text' class="form-control" />
+                    <input type='text' class="form-control"/>
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
             </div>
         </div>
-        <div class='col-xs-4'>
-            <p>Meter Reading: @Model.MeterReading</p>
-            <p>Units: @Model.UnitsUsed</p>
-            <p>Energy Usage: @Model.EnergyUsed.ToString("0.##") kWh</p>
-        </div>
-        <div class='col-xs-4'>
-            @if (@Model.UnitsUsed != 0)
+        <div class='col-xs-8'>
+            <p style="text-align: center; font-weight: bold;">Meter Reading: @Model.MeterReading</p>
+            @if (@Model.CostSummary != null)
             {
-                <p>Energy Cost: £@Model.EnergyCost.ToString("0.##")</p>
-                <p>Day Charge: @(Model.DayCharge*100)p</p>
-                <p>Total Cost: £@Model.TotalChargeNoVAT.ToString("0.##")</p>
-                <p>Total Cost (VAT): £@Model.TotalCharge.ToString("0.##")</p>
+                @Html.Partial("_CostSummary", @Model.CostSummary)
             }
         </div>
     </div>

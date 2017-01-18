@@ -140,6 +140,7 @@
     <Compile Include="Common\HtmlExtensions.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MeterReadingsController.cs" />
+    <Compile Include="Controllers\ReportingController.cs" />
     <Compile Include="Controllers\ThermostateReadingsController.cs" />
     <Compile Include="Controllers\ThermostateReadingsServiceController.cs" />
     <Compile Include="Global.asax.cs">
@@ -163,6 +164,8 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\NestLoggerContext.cs" />
+    <Compile Include="Models\ViewModels\CostReport.cs" />
+    <Compile Include="Models\ViewModels\CostSummary.cs" />
     <Compile Include="Models\ViewModels\DaySummary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -221,6 +224,8 @@
     <Content Include="Views\MeterReadings\Edit.cshtml" />
     <Content Include="Views\MeterReadings\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Reporting\Index.cshtml" />
+    <Content Include="Views\Shared\_CostSummary.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201701130841251_Initial.resx">

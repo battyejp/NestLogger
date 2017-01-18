@@ -1,0 +1,15 @@
+﻿@model NestLogger.Models.ViewModels.CostSummary
+
+
+<div class='col-xs-6'>
+    <p>Days: @Model.NumberOfDays</p>
+    <p>Units: @Model.UnitsUsed</p>
+    <p>Energy Usage: @Model.EnergyUsed.ToString("0.##") kWh</p>
+</div>
+<div class='col-xs-6'>
+    <p>Energy Cost: £@Model.EnergyCost.ToString("0.##")</p>
+    <p>Fixed Charge: @Model.FixedCharged.ToString("0.##") (14.09p x Days)</p>
+    <p>Total Cost: £@Model.TotalChargeNoVAT.ToString("0.##")</p>
+    <p>Total Cost (VAT): £@Model.TotalCharge.ToString("0.##")</p>
+</div>
+

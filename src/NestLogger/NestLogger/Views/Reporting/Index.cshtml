@@ -1,0 +1,101 @@
+﻿@model NestLogger.Models.ViewModels.CostReport
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Reporting</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr/>
+
+        @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+
+        <div class='row'>
+            <div class='col-md-6'>
+              <div class="form-group">
+                  @Html.LabelFor(model => model.StartDate, htmlAttributes: new {@class = "control-label col-md-2"})
+                  <div class="col-md-10">
+                      @Html.EditorFor(model => model.StartDate, new {htmlAttributes = new {@class = "form-control"}})
+                      @Html.ValidationMessageFor(model => model.StartDate, "", new {@class = "text-danger"})
+                  </div>
+              </div>
+            </div>
+            <div class='col-md-6'>
+                @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+                <div class="form-group">
+                    @Html.LabelFor(model => model.StartMeterReading, htmlAttributes: new {@class = "control-label col-md-4"})
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.StartMeterReading, new {htmlAttributes = new {@class = "form-control", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.StartMeterReading, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='row'>
+            <div class='col-md-6'>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.EndDate, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class='col-md-6'>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.EndMeterReading, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.EditorFor(model => model.EndMeterReading, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                        @Html.ValidationMessageFor(model => model.EndMeterReading, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default"/>
+            </div>
+        </div>
+    </div>
+
+    <div id="gridResults">
+        @if (Model.CostSummary != null)
+        {
+            Html.RenderPartial("_CostSummary", Model.CostSummary);
+        }
+    </div>
+}
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.date')
+                .on('dp.change', function (e) {
+                    var element = this.children[0];
+                    $.ajax({
+                        type: "POST", 
+                        url: "/Reporting/MeterReading",
+                        data: { date: e.date._d.toISOString() },
+                        dataType: "json",
+                        success: function (response) {
+                            if ($(element)[0].id === 'StartDate') {
+                                $('#StartMeterReading').val(response);
+                            } else {
+                                $('#EndMeterReading').val(response);
+                            }
+                        },
+                        error: function(xhr, ajaxOptions, thrownError) {
+                             alert(xhr.responseText);
+                        }
+                    });
+                });
+            });
+    </script>
+}
