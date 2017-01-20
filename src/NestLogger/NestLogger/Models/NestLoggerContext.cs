@@ -19,5 +19,9 @@ namespace NestLogger.Models
         public DbSet<ThermostateReading> ThermostateReadings { get; set; }
 
         public System.Data.Entity.DbSet<NestLogger.Dtos.MeterReading> MeterReadings { get; set; }
+
+        public System.Data.Entity.DbSet<NestLogger.Dtos.HotWaterSchedule> HotWaterSchedules { get; set; }
+
+        public System.Data.Entity.DbSet<NestLogger.Dtos.HobUsage> HobUsages { get; set; }
     }
 }

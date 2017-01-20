@@ -138,7 +138,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Common\HtmlExtensions.cs" />
+    <Compile Include="Controllers\HobUsagesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HotWaterSchedulesController.cs" />
     <Compile Include="Controllers\MeterReadingsController.cs" />
     <Compile Include="Controllers\ReportingController.cs" />
     <Compile Include="Controllers\ThermostateReadingsController.cs" />
@@ -161,6 +163,18 @@
     <Compile Include="Migrations\201701171531325_AddTable-MeterReadings.cs" />
     <Compile Include="Migrations\201701171531325_AddTable-MeterReadings.Designer.cs">
       <DependentUpon>201701171531325_AddTable-MeterReadings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701200833231_UnitsUsedToDouble.cs" />
+    <Compile Include="Migrations\201701200833231_UnitsUsedToDouble.Designer.cs">
+      <DependentUpon>201701200833231_UnitsUsedToDouble.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701200858254_add-hotwaterandhobusage.cs" />
+    <Compile Include="Migrations\201701200858254_add-hotwaterandhobusage.Designer.cs">
+      <DependentUpon>201701200858254_add-hotwaterandhobusage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701200903191_Add-DateToHobUsage.cs" />
+    <Compile Include="Migrations\201701200903191_Add-DateToHobUsage.Designer.cs">
+      <DependentUpon>201701200903191_Add-DateToHobUsage.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\NestLoggerContext.cs" />
@@ -226,6 +240,16 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Reporting\Index.cshtml" />
     <Content Include="Views\Shared\_CostSummary.cshtml" />
+    <Content Include="Views\HotWaterSchedules\Create.cshtml" />
+    <Content Include="Views\HotWaterSchedules\Delete.cshtml" />
+    <Content Include="Views\HotWaterSchedules\Details.cshtml" />
+    <Content Include="Views\HotWaterSchedules\Edit.cshtml" />
+    <Content Include="Views\HotWaterSchedules\Index.cshtml" />
+    <Content Include="Views\HobUsages\Create.cshtml" />
+    <Content Include="Views\HobUsages\Delete.cshtml" />
+    <Content Include="Views\HobUsages\Details.cshtml" />
+    <Content Include="Views\HobUsages\Edit.cshtml" />
+    <Content Include="Views\HobUsages\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201701130841251_Initial.resx">
@@ -239,6 +263,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701171531325_AddTable-MeterReadings.resx">
       <DependentUpon>201701171531325_AddTable-MeterReadings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701200833231_UnitsUsedToDouble.resx">
+      <DependentUpon>201701200833231_UnitsUsedToDouble.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701200858254_add-hotwaterandhobusage.resx">
+      <DependentUpon>201701200858254_add-hotwaterandhobusage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701200903191_Add-DateToHobUsage.resx">
+      <DependentUpon>201701200903191_Add-DateToHobUsage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

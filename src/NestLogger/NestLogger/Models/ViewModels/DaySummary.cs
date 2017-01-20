@@ -8,7 +8,7 @@ namespace NestLogger.Models.ViewModels
 {
     public class DaySummary
     {
-        public int MeterReading { get; set; }
+        public double MeterReading { get; set; }
 
         public CostSummary CostSummary { get; set; }
 

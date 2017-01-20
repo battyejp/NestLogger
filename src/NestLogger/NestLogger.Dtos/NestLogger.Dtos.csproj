@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HobUsage.cs" />
+    <Compile Include="HotWaterSchedule.cs" />
     <Compile Include="MeterReading.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ThermostateReading.cs" />
