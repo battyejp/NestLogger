@@ -8,9 +8,9 @@ namespace NestLogger.Models.ViewModels
 
         public DateTime EndDate { get; set; }
 
-        public int StartMeterReading { get; set; }
+        public double StartMeterReading { get; set; }
 
-        public int EndMeterReading { get; set; }
+        public double EndMeterReading { get; set; }
 
         public CostSummary CostSummary { get; set; }
     }

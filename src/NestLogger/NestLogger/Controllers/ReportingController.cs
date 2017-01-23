@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.ApplicationInsights.DataContracts;
 using NestLogger.Models;
 using NestLogger.Models.ViewModels;
 
@@ -48,7 +49,13 @@ namespace NestLogger.Controllers
         [HttpPost]
         public JsonResult MeterReading(DateTime date)
         {
-            var meterReading = db.MeterReadings.SingleOrDefault(x => x.DateTime == date);
+            date = date.AddHours(12); // so deals with BST
+            var meterReading = db.MeterReadings.ToList().SingleOrDefault(x => x.DateTime.Date == date.Date);
+
+            var telemetry = new Microsoft.ApplicationInsights.TelemetryClient();
+            telemetry.TrackTrace("MeterReading Post date",
+                           SeverityLevel.Information,
+                           new Dictionary<string, string> { { "date", date.ToShortDateString() }, { "date2", date.ToString()}, { "date3", date.ToLongDateString() } });
 
             if (meterReading != null)
                 return Json(meterReading.Value);
