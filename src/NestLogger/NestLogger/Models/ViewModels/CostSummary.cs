@@ -18,8 +18,8 @@ namespace NestLogger.Models.ViewModels
             NumberOfDays = daysBetweenReadings;
             UnitsUsed = currentMeterReadingValue - previousMeterReadingValue;
             RoundedUnitsUsed = (int) currentMeterReadingValue - (int) previousMeterReadingValue;
-            EnergyUsed = (RoundedUnitsUsed * 1.022640 * 39.5) / 3.6;
-            EnergyCost = EnergyUsed*0.0375;
+            EnergyUsed = (RoundedUnitsUsed * 1.022640 * 39.7) / 3.6;
+            EnergyCost = EnergyUsed*0.02726;
             FixedCharged = (DayCharge * daysBetweenReadings);
             TotalChargeNoVAT = EnergyCost + FixedCharged;
             TotalCharge = ((TotalChargeNoVAT / 100) * 5) + TotalChargeNoVAT;
@@ -35,7 +35,7 @@ namespace NestLogger.Models.ViewModels
 
         public double TotalCharge { get; private set; }
 
-        public double DayCharge => 0.1409;
+        public double DayCharge => 0.1827;
 
         public double FixedCharged { get; }
 
